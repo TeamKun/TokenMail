@@ -14,7 +14,7 @@ GMAIL_DEFAULT_SCOPES = gspread.auth.DEFAULT_SCOPES + ['https://www.googleapis.co
 gc = gspread.oauth(GMAIL_DEFAULT_SCOPES)
 
 sh = gc.open_by_key("1QJmehI1eJDcYUAlDVulUe_P-gez_Xd6S5en0jk0A4B0")
-ws = sh.worksheet('ユーザー')
+ws = sh.worksheet('ユーザー2')
 
 
 # 2. メール本文の作成

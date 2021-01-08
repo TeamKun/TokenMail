@@ -1,3 +1,4 @@
 gspread
 pandas
 discord
+discord-py-slash-command
