@@ -86,7 +86,7 @@ async def on_message(ctx: SlashContext):
     await ctx.send(
         embeds=[
             discord.Embed(
-                title='✅ 招待リンク完了',
+                title='✅ KUN Lab への招待リンク',
                 description=
                 f'DMに招待リンクと認証コードを送信しました。\n'
                 f'DMをご確認ください。'
