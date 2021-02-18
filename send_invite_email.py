@@ -1,3 +1,4 @@
+import os
 import gspread
 from googleapiclient.discovery import build
 import base64
@@ -9,6 +10,9 @@ from email.utils import formataddr
 # 1. Gmail APIのスコープを設定
 GMAIL_DEFAULT_SCOPES = gspread.auth.DEFAULT_SCOPES + ['https://www.googleapis.com/auth/gmail.send']
 
+
+# 招待リンク
+INVITE_LINK = os.environ["DISCORD_INVITE_LINK"]
 
 # Spread Sheet
 gc = gspread.oauth(GMAIL_DEFAULT_SCOPES)
@@ -55,7 +59,7 @@ def send_invite_email(to, user_name, user_token):
 下記のリンクからご参加いだだいた後、Discord内の案内に従い下記の認証コードの入力をお願いします。
 
 ▼ Discord招待URL
-https://discord.gg/**********
+{INVITE_LINK}
 
 ▼ あなたの認証コード (6桁)
 {user_token}
