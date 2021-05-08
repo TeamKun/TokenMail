@@ -13,7 +13,7 @@ ROLE_ID = 792792490842783762
 gc = gspread.oauth()
 
 sh = gc.open_by_key("1QJmehI1eJDcYUAlDVulUe_P-gez_Xd6S5en0jk0A4B0")
-ws = sh.worksheet('ユーザー')
+ws = sh.worksheet('第2回通過者')
 
 
 # Discord
@@ -35,10 +35,10 @@ async def on_message(message: discord.Message):
     if author.bot:
         return
 
-    if len(message.content) != 6:
+    if len(message.content) != 7:
         return
 
-    id_cells = ws.findall(str(author.id), in_column=15)
+    id_cells = ws.findall(str(author.id), in_column=16)
     if id_cells:
         await message.channel.send(
             embed=discord.Embed(
@@ -49,7 +49,7 @@ async def on_message(message: discord.Message):
         )
         return
 
-    token_cells = ws.findall(message.content, in_column=14)
+    token_cells = ws.findall(message.content, in_column=17)
     if not token_cells:
         await message.channel.send(
             embed=discord.Embed(
@@ -62,11 +62,11 @@ async def on_message(message: discord.Message):
 
     cell = token_cells[0]
     row = cell.row
-    user_data = ws.batch_get([f'D{row}', f'M{row}'])
+    user_data = ws.batch_get([f'O{row}', f'P{row}'])
     user_id = user_data[1][0][0]
     user_name = user_data[0][0][0]
 
-    discord_cell = ws.range(f'O{row}:P{row}')
+    discord_cell = ws.range(f'R{row}:S{row}')
     if discord_cell[0].value or discord_cell[1].value:
         await message.channel.send(
             embed=discord.Embed(
@@ -77,12 +77,12 @@ async def on_message(message: discord.Message):
         )
         return
 
-    ws.update(f'O{row}:P{row}', [[str(author.id), str(author)]])
+    ws.update(f'R{row}:S{row}', [[str(author.id), str(author)]])
 
     role = message.guild.get_role(ROLE_ID)
     await author.add_roles(role, reason='認証完了')
     try:
-        await author.edit(nick=f'[K{user_id}] {author.display_name}')
+        await author.edit(nick=f'[L{user_id}] {author.display_name}')
     except discord.errors.Forbidden:
         pass
 
@@ -91,7 +91,7 @@ async def on_message(message: discord.Message):
             title='✅ 認証完了',
             description=
             f'`{user_name}` さん、認証ありがとうございます。\n'
-            f'あなたのIDは `K{user_id}` です'
+            f'あなたのIDは `L{user_id}` です'
         )
     )
 

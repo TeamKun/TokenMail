@@ -18,7 +18,7 @@ INVITE_LINK = os.environ["DISCORD_INVITE_LINK"]
 gc = gspread.oauth(GMAIL_DEFAULT_SCOPES)
 
 sh = gc.open_by_key("1QJmehI1eJDcYUAlDVulUe_P-gez_Xd6S5en0jk0A4B0")
-ws = sh.worksheet('ユーザー2')
+ws = sh.worksheet('第2回通過者')
 
 
 # 2. メール本文の作成
@@ -48,11 +48,11 @@ service = build('gmail', 'v1', credentials=gc.auth)
 
 def send_invite_email(to, user_name, user_token):
     # 6. メール本文の作成
-    subject = '[KUNプログラミング勢選考] 選考通過と、Discordへの参加について'
+    subject = '[第2回 KUN Lab選考] 選考通過と、Discordへの参加について'
     message_text = f'''\
 {user_name} 様
 
-このたびはKUNプログラミング勢選考にご応募いただきありがとうございます。
+このたびは第2回 KUN Lab選考にご応募いただきありがとうございます。
 試験の結果、二次試験にお進みいただきたくご連絡差し上げました。
 
 ついては、Discordの参加をご案内させていただきます。
@@ -78,15 +78,15 @@ Twitter　https://twitter.com/Kmesuta
     send_message(service, 'me', message)
 
 
-selectorB = f'B3:B{ws.row_count}'
+selectorB = f'B2:B{ws.row_count}'
 
 sample = ws.range(selectorB)
 sa_count = max([cell.row for cell in sample if cell.value])
-sh_count = sa_count - 2
+sh_count = sa_count - 1
 
-selectorB = f'B3:B{sa_count}'
-selectorD = f'D3:D{sa_count}'
-selectorN = f'N3:N{sa_count}'
+selectorB = f'B2:B{sa_count}'
+selectorD = f'O2:O{sa_count}'
+selectorN = f'Q2:Q{sa_count}'
 
 users = ws.batch_get([selectorB, selectorD, selectorN])
 
