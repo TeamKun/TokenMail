@@ -65,6 +65,7 @@ async def on_message(message: discord.Message):
     user_data = ws.batch_get([f'O{row}', f'P{row}'])
     user_id = user_data[1][0][0]
     user_name = user_data[0][0][0]
+    user_id_str = format(user_id, '0>2')
 
     discord_cell = ws.range(f'R{row}:S{row}')
     if discord_cell[0].value or discord_cell[1].value:
@@ -82,7 +83,7 @@ async def on_message(message: discord.Message):
     role = message.guild.get_role(ROLE_ID)
     await author.add_roles(role, reason='認証完了')
     try:
-        await author.edit(nick=f'[L{user_id}] {author.display_name}')
+        await author.edit(nick=f'[L{user_id_str}] {author.display_name}')
     except discord.errors.Forbidden:
         pass
 
@@ -91,7 +92,7 @@ async def on_message(message: discord.Message):
             title='✅ 認証完了',
             description=
             f'`{user_name}` さん、認証ありがとうございます。\n'
-            f'あなたのIDは `L{user_id}` です'
+            f'あなたのIDは `L{user_id_str}` です'
         )
     )
 
